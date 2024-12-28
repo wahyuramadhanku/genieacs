@@ -8,6 +8,7 @@ git clone https://github.com/alijayanet/genieacs
 Download file bash Ubah hak akses file menjadi execute
 
 cd AutoInstallGenieACS
+
 chmod +x AutoInstallGenieACS.sh
 
 ./installACS.sh

@@ -5,17 +5,17 @@ local_ip=$(hostname -I | awk '{print $1}')
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}============================ Install GenieACS. =============================${NC}"
 echo -e "${GREEN}======================== NodeJS, MongoDB, GenieACS, ========================${NC}"
-echo -e "${GREEN}===================== By ALIJAYA-NET. Info 081947215703 =====================${NC}"
+echo -e "${GREEN}===================== By ALIJAYA-NET. Info 081947215703 ====================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
-echo -e "${GREEN}Sebelum melanjutkan, silahkan baca terlebih dahulu. Apakah anda ingin melanjutkan? (y/n)${NC}"
+echo -e "${GREEN}Apakah anda ingin melanjutkan? (y/n)${NC}"
 read confirmation
 if [ "$confirmation" != "y" ]; then
-    echo -e "${GREEN}Install dibatalkan. Tidak ada perubahan dalam ubuntu server anda.${NC}"
+    echo -e "${GREEN}Install dibatalkan.${NC}"
     exit 1
 fi
 for ((i = 5; i >= 1; i--)); do
 	sleep 1
-    echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
+    echo "Melanjut $i. Tekan ctrl+c untuk membatalkan"
 done
 
 #Install NodeJS
@@ -160,6 +160,9 @@ EOF
     delaycompress
     dateext
 }
+# Restor vparam
+mongorestore --db=genieacs --drop genieacs
+
 EOF
     echo -e "${GREEN}========== Install APP GenieACS selesai... ==============${NC}"
     systemctl daemon-reload
@@ -170,7 +173,6 @@ else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}=================== GenieACS sudah terinstall sebelumnya. ==================${NC}"
 fi
-sudo mongorestore --db=genieacs --drop genieacs
 #Sukses
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"

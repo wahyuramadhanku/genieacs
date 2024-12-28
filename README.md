@@ -1,0 +1,2 @@
+# genieacs
+install genieacs otomatis

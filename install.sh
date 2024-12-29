@@ -1,6 +1,4 @@
 #!/bin/bash
-#sudo curl -s https://srv.ddns.my.id/genieacs/genieacs/install.sh -o /tmp/install.sh && sudo bash /tmp/install.sh
-url_install='https://srv.ddns.my.id/genieacs/genieacs/'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'

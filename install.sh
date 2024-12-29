@@ -107,6 +107,7 @@ echo -e "${GREEN}===============================================================
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
 echo -e "${GREEN}=================== Informasi: Whatsapp 081-947-215-703 ====================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
+
 echo -e "${GREEN}Sekarang install parameter. Apakah anda ingin melanjutkan? (y/n)${NC}"
 read confirmation
 

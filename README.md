@@ -8,10 +8,10 @@ git clone https://github.com/alijayanet/genieacs
 
 cd genieacs
 
-chmod +x installACS.sh
+chmod +x install.sh
 
-./installACS.sh
+./install.sh
 
-=============input parameter=========
+=============input parameter Otomatis=========
 
-sudo mongorestore --db=genieacs --drop genieacs
+============= INFO 081947215703 ==============

@@ -107,5 +107,18 @@ echo -e "${GREEN}===============================================================
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
 echo -e "${GREEN}=================== Informasi: Whatsapp 081-947-215-703 ====================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
+echo -e "${GREEN}Sekarang install parameter. Apakah anda ingin melanjutkan? (y/n)${NC}"
+read confirmation
+
+if [ "$confirmation" != "y" ]; then
+    echo -e "${GREEN}Install dibatalkan. Tidak ada perubahan dalam ubuntu server anda.${NC}"
+    install.sh
+    exit 1
+fi
+for ((i = 5; i >= 1; i--)); do
+	sleep 1
+    echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
+done
+
 cd -
 sudo mongorestore --db=genieacs --drop genieacs

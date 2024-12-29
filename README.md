@@ -6,7 +6,7 @@ git clone https://github.com/alijayanet/genieacs
 ==========install genieacs otomatis===========
 
 
-cd tmp
+cd genieacs
 
 chmod +x installACS.sh
 

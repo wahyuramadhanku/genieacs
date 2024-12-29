@@ -11,3 +11,7 @@ cd genieacs
 chmod +x installACS.sh
 
 ./installACS.sh
+
+=============input parameter=========
+
+sudo mongorestore --db=genieacs --drop genieacs

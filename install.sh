@@ -9,7 +9,6 @@ echo -e "${GREEN}======================== NodeJS, MongoDB, GenieACS, ===========
 echo -e "${GREEN}========================= . Info 081-947-215-703 ===========================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
-echo -e "${GREEN}${NC}"
 echo -e "${GREEN}=============================================================================${NC}"
 echo -e "${RED}${NC}"
 echo -e "${GREEN}Sebelum melanjutkan, silahkan baca terlebih dahulu. Apakah anda ingin melanjutkan? (y/n)${NC}"

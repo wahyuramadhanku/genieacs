@@ -36,12 +36,6 @@ check_node_version() {
 }
 
 if ! check_node_version; then
-    curl -s \
-${url_install}\
-nodejs.sh | \
-sudo bash
-else
-    NODE_VERSION=$(node -v | cut -d 'v' -f 2)
     echo -e "${GREEN}================== Menginstall NodeJS ==================${NC}"
     curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
     chmod +x nodesource_setup.sh
@@ -57,19 +51,21 @@ else
 fi
 
 #MongoDB
-if ! sudo systemctl is-active --quiet mongod; then
-    curl -s \
-${url_install}\
-mongod.sh | \
-sudo bash
+if !  systemctl is-active --quiet mongod; then
+    echo -e "${GREEN}================== Menginstall MongoDB ==================${NC}"
+    curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
+    apt-key list
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+    apt update
+    apt install mongodb-org -y
+    systemctl start mongod.service
+    systemctl start mongod
+    systemctl enable mongod
+    mongo --eval 'db.runCommand({ connectionStatus: 1 })'
+    echo -e "${GREEN}================== Sukses MongoDB ==================${NC}"
 else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}=================== mongodb sudah terinstall sebelumnya. ===================${NC}"
-fi
-sleep 3
-if ! sudo systemctl is-active --quiet mongod; then
-    sudo rm /tmp/install.sh
-    exit 1
 fi
 
 #GenieACS
@@ -180,5 +176,3 @@ echo -e "${GREEN}===============================================================
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
 echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 =====================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
-cd -
-sudo mongorestore --db=genieacs --drop genieacs

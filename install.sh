@@ -18,13 +18,13 @@ echo -e "${GREEN} Apakah anda ingin melanjutkan? (y/n)${NC}"
 read confirmation
 
 if [ "$confirmation" != "y" ]; then
-    echo -e "${GREEN}Install dibatalkan. Tidak ada perubahan dalam ubuntu server anda.${NC}"
-    /tmp/install.sh
+    echo -e "${GREEN}Install dibatalkan..${NC}"
+    install.sh
     exit 1
 fi
 for ((i = 5; i >= 1; i--)); do
 	sleep 1
-    echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
+    echo "Lanjut Bos... $i. Tekan ctrl+c untuk membatalkan"
 done
 
 #MongoDB
@@ -36,6 +36,7 @@ sudo bash
 else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}=================== mongodb sudah terinstall sebelumnya. ===================${NC}"
+    echo -e "${GREEN}============================================================================${NC}"
 fi
 sleep 3
 if ! sudo systemctl is-active --quiet mongod; then
@@ -70,6 +71,7 @@ else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}============== NodeJS sudah terinstall versi ${NODE_VERSION}. ==============${NC}"
     echo -e "${GREEN}========================= Lanjut install GenieACS ==========================${NC}"
+    echo -e "${GREEN}============================================================================${NC}"
 
 fi
 if ! check_node_version; then
@@ -96,6 +98,7 @@ sudo bash
 else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}=================== GenieACS sudah terinstall sebelumnya. ==================${NC}"
+    echo -e "${GREEN}============================================================================${NC}"
 fi
 
 
@@ -115,13 +118,13 @@ echo -e "${GREEN}Sekarang install parameter. Apakah anda ingin melanjutkan? (y/n
 read confirmation
 
 if [ "$confirmation" != "y" ]; then
-    echo -e "${GREEN}Install dibatalkan. Tidak ada perubahan dalam ubuntu server anda.${NC}"
+    echo -e "${GREEN}Install dibatalkan..${NC}"
     install.sh
     exit 1
 fi
 for ((i = 5; i >= 1; i--)); do
 	sleep 1
-    echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
+    echo "Lanjut Install Parameter $i. Tekan ctrl+c untuk membatalkan"
 done
 
 cd -

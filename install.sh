@@ -1,5 +1,4 @@
 #!/bin/bash
-#sudo curl -s https://srv.ddns.my.id/genieacs/genieacs/install.sh -o /tmp/install.sh && sudo bash /tmp/install.sh
 url_install='https://srv.ddns.my.id/genieacs/genieacs/'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -12,14 +11,6 @@ echo -e "${GREEN}========================= . Info 081-947-215-703 ==============
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}${NC}"
 echo -e "${GREEN}Autoinstall GenieACS.${NC}"
-echo -e "${GREEN}- Ini adalah script untuk auto install genieACS beserta nodeJS dan MongoDB${NC}"
-echo -e "${GREEN}- Script ini bisa digunakan baik yang sudah terisntall nodeJS dan mongoDB maupun yang belum${NC}"
-echo -e "${GREEN}- Jika nodeJS dan mongoDB belum terinstall, maka akan terinstall versi:${NC}"
-echo -e "${GREEN}   • NodeJS: 16.x atau 18.x, otomatis memilih tergantung support dari OS nya${NC}"
-echo -e "${GREEN}   • mongodb: 4.4 atau 7.0, otomatis memilih tergantung support dari OS nya${NC}"
-echo -e "${GREEN}=> TESTED ubuntu server 18 (Bionic), 20 (Focal), 22 (Jammy), 23 (Mantic), dan 24 (Noble)${NC}"
-echo -e "${GREEN}=> UNTESTED armbian, and other OS${NC}"
-echo -e "${GREEN}Untuk konfigurasi, technical support, integrasi API, Hubungi whatsapp 0838-3236-2616 atau telegram https://t.me/Pwrrp${NC}"
 echo -e "${GREEN}${NC}"
 echo -e "${GREEN}======================================================================================${NC}"
 echo -e "${RED}${NC}"

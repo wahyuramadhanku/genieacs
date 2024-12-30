@@ -13,18 +13,21 @@ echo -e "${GREEN}========= AA   AA LLLLLLL IIIII  JJJJJ  AA   AA   YYY   AA   AA
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}========================= . Info 081-947-215-703 ===========================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
+echo -e "${GREEN}${NC}"
+echo -e "${GREEN}Autoinstall GenieACS.${NC}"
+echo -e "${GREEN}======================================================================================${NC}"
 echo -e "${RED}${NC}"
-echo -e "${GREEN} Apakah anda ingin melanjutkan? (y/n)${NC}"
+echo -e "${GREEN}Apakah anda ingin melanjutkan? (y/n)${NC}"
 read confirmation
 
 if [ "$confirmation" != "y" ]; then
-    echo -e "${GREEN}Install dibatalkan..${NC}"
-   
+    echo -e "${GREEN}Install dibatalkan. Tidak ada perubahan dalam ubuntu server anda.${NC}"
+    /tmp/install.sh
     exit 1
 fi
 for ((i = 5; i >= 1; i--)); do
 	sleep 1
-    echo "Lanjut Bos... $i. Tekan ctrl+c untuk membatalkan"
+    echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
 done
 
 #MongoDB
@@ -36,7 +39,6 @@ sudo bash
 else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}=================== mongodb sudah terinstall sebelumnya. ===================${NC}"
-    echo -e "${GREEN}============================================================================${NC}"
 fi
 sleep 3
 if ! sudo systemctl is-active --quiet mongod; then
@@ -71,7 +73,6 @@ else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}============== NodeJS sudah terinstall versi ${NODE_VERSION}. ==============${NC}"
     echo -e "${GREEN}========================= Lanjut install GenieACS ==========================${NC}"
-    echo -e "${GREEN}============================================================================${NC}"
 
 fi
 if ! check_node_version; then
@@ -88,8 +89,8 @@ sudo bash
     sleep 3
     if ! sudo systemctl is-active --quiet genieacs-{cwmp,fs,ui,nbi}; then
         echo -e "${RED}============================================================================${NC}"
-        echo -e "${RED}======================= INSTALASI TIDAK BISA DILANJUTKAN. ==================${NC}"
-        echo -e "${GREEN}=================== Informasi: Whatsapp 081-947-215-703 ==================${NC}"
+        echo -e "${RED}==== GenieACS tidak running nih bosq. INSTALASI TIDAK BISA DILANJUTKAN. ====${NC}"
+        echo -e "${GREEN}=================== Informasi: Whatsapp 081 947 215 703 ==================${NC}"
         echo -e "${RED}============================================================================${NC}"
         sudo rm /tmp/install.sh
         exit 1
@@ -98,7 +99,6 @@ sudo bash
 else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}=================== GenieACS sudah terinstall sebelumnya. ==================${NC}"
-    echo -e "${GREEN}============================================================================${NC}"
 fi
 
 
@@ -111,21 +111,6 @@ fi
 
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
-echo -e "${GREEN}=================== Informasi: Whatsapp 081-947-215-703 ====================${NC}"
+echo -e "${GREEN}=================== Informasi: Whatsapp 081 947 215 703 ====================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
-
-echo -e "${GREEN}Sekarang install parameter. Apakah anda ingin melanjutkan? (y/n)${NC}"
-read confirmation
-
-if [ "$confirmation" != "y" ]; then
-    echo -e "${GREEN}Install dibatalkan..${NC}"
-    
-    exit 1
-fi
-for ((i = 5; i >= 1; i--)); do
-	sleep 1
-    echo "Lanjut Install Parameter $i. Tekan ctrl+c untuk membatalkan"
-done
-
-cd -
-sudo mongorestore --db=genieacs --drop genieacs
+sudo rm /tmp/install.sh

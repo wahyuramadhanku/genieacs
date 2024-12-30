@@ -90,7 +90,7 @@ sudo bash
     if ! sudo systemctl is-active --quiet genieacs-{cwmp,fs,ui,nbi}; then
         echo -e "${RED}============================================================================${NC}"
         echo -e "${RED}==== GenieACS tidak running nih bosq. INSTALASI TIDAK BISA DILANJUTKAN. ====${NC}"
-        echo -e "${GREEN}=================== Informasi: Whatsapp 081 947 215 703 ==================${NC}"
+        echo -e "${GREEN}=================== Informasi: Whatsapp 081 947 215 703 =====================${NC}"
         echo -e "${RED}============================================================================${NC}"
         sudo rm /tmp/install.sh
         exit 1
@@ -113,6 +113,4 @@ echo -e "${GREEN}===============================================================
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
 echo -e "${GREEN}=================== Informasi: Whatsapp 081 947 215 703 ====================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
-sudo rm install.sh
-cd
-sudo mongorestore --db=genieacs --drop genieacs
+sudo rm /tmp/install.sh

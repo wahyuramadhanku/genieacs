@@ -1,5 +1,4 @@
 #!/bin/bash
-url_install='https://srv.ddns.my.id/genieacs/genieacs/'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
@@ -188,7 +187,9 @@ fi
 #Sukses
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
-echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 =====================${NC}"
+echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 =======================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
+cd
+sudo mongorestore --db=genieacs --drop genieacs
 
 

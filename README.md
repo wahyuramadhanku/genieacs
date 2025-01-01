@@ -11,11 +11,11 @@ chmod +x install.sh && chmod +x installdemo.sh
 
 ============= Genieacs Original ========================
 
-./install.sh
+bash install.sh
 
 ============ Genieacs + Virtual Parameter ==============
 
-./installdemo.sh
+bash installdemo.sh
 
 =============Sudah terinput parameter Otomatis=========
 

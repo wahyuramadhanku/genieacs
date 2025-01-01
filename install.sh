@@ -192,6 +192,6 @@ echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 ==========
 echo -e "${GREEN}============================================================================${NC}"
 cd
 sudo mongorestore --db=genieacs --drop genieacs
-sudo rm genieacs/install.sh
+rm -r genieacs
 
 

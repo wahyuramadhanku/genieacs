@@ -14,4 +14,6 @@ chmod +x install.sh
 
 =============input parameter Otomatis=========
 
+user login : admin password : admin
+
 ============= INFO 081947215703 ==============

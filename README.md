@@ -1,5 +1,5 @@
 # genieacs
-==========install genieacs otomatis===========
+================install genieacs otomatis================
 
 apt install git curl -y
 
@@ -7,9 +7,15 @@ git clone https://github.com/alijayanet/genieacs
 
 cd genieacs
 
-chmod +x install.sh
+chmod +x install.sh && chmod +x installdemo.sh
+
+============= Genieacs Original ========================
 
 ./install.sh
+
+============ Genieacs + Virtual Parameter ==============
+
+./installdemo.sh
 
 =============Sudah terinput parameter Otomatis=========
 

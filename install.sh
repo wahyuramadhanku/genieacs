@@ -44,7 +44,7 @@ else
 fi
 sleep 3
 if ! sudo systemctl is-active --quiet mongod; then
-    sudo rm /tmp/install.sh
+    sudo rm genieacs/install.sh
     exit 1
 fi
 
@@ -78,7 +78,7 @@ else
 
 fi
 if ! check_node_version; then
-    sudo rm /tmp/install.sh
+    sudo rm genieacs/install.sh
     exit 1
 fi
 
@@ -192,5 +192,6 @@ echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 ==========
 echo -e "${GREEN}============================================================================${NC}"
 cd
 sudo mongorestore --db=genieacs --drop genieacs
+sudo rm genieacs/install.sh
 
 

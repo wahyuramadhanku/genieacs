@@ -23,4 +23,6 @@ user : admin
 
 pass : admin
 
+Jangan lupa ganti url acs di admin provicion inform dengan ip url server anda
+
 ============= INFO 081947215703 ==============

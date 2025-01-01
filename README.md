@@ -13,6 +13,7 @@ chmod +x install.sh
 
 =============Sudah terinput parameter Otomatis=========
 
-user login : admin password : admin
+user : admin 
+pass : admin
 
 ============= INFO 081947215703 ==============

@@ -44,16 +44,5 @@ Anda masih bisa kembali ke konfigurasi sebelumnya dengan memilih restore<br>
 cd<br>
 sudo mongorestore --db=genieacs --drop genieacs-backup/genieacs
 
-<button id="copyButton">Copy</button>
-<script>
-document.getElementById('copyButton').addEventListener('click', function() {
-    const textToCopy = "Teks yang ingin dicopy";
-    navigator.clipboard.writeText(textToCopy).then(function() {
-        console.log('Text copied to clipboard');
-    }, function(err) {
-        console.error('Error copying text: ', err);
-    });
-});
-</script>
 
 

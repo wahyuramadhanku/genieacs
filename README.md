@@ -42,7 +42,8 @@ Yang akan diupdate, yaitu:
    
 #===Script/config tersebut akan terganti dengan yang baru ====#
 
-Jika anda memiliki config/script custom buatan anda sendiri, silahkan backup terlebih dahulu, kemudian setelah update lakukan config manual lagi sesuai config custom anda.
+Jika anda memiliki config/script custom buatan anda sendiri,<br> 
+silahkan backup terlebih dahulu, kemudian setelah update lakukan config manual lagi sesuai config custom anda.<br>
 
 Device, user, permisions, tidak akan terpengaruh<br>
 Bagi yang confignya error, akan ter-repair dengan script ini<br>

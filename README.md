@@ -1,22 +1,34 @@
 # genieacs
 ================install genieacs otomatis================
 
-apt install git curl -y
+# GACS-Ubuntu-22.04
+This is autoinstall GenieACS For ubuntu version 22.04 (Jammy)
 
-git clone https://github.com/alijayanet/genieacs
+# Usage
+```
+sudo su
+```
+```
+git clone https://github.com/safrinnetwork/GACS-Ubuntu-22.04
+```
+```
+cd GACS-Ubuntu-22.04
+```
+```
+chmod +x GACS-Jammy.sh
+```
+```
+sudo apt-get install dos2unix
+```
+```
+dos2unix GACS-Jammy.sh
+```
+```
+bash GACS-Jammy.sh
+```
 
-cd genieacs
-
-chmod +x install.sh && chmod +x installdemo.sh
-
-============= Genieacs Original ========================
-
-bash install.sh
-
-============ Genieacs + Virtual Parameter Demo ==============
-
-bash installdemo.sh
-
+# Full Tutorial
+- https://youtu.be/p_UNuq0rfg0
 ============= INFO 081947215703 ==============
 
 ======================= Baca terlebih dahulu !!! ========================

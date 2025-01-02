@@ -7,7 +7,7 @@ git clone https://github.com/alijayanet/genieacs
 
 cd genieacs
 
-chmod +x install.sh && chmod +x installdemo.sh
+chmod +x install.sh && chmod +x installdemo.sh && restore.sh
 
 ============= Genieacs Original ========================
 

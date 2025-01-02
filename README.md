@@ -14,9 +14,11 @@ cd genieacs
 ```
 chmod +x install.sh && chmod +x installdemo.sh
 ```
+INSTALL GENIEACS ORIGINAL
 ```
 bash install.sh
 ```
+INSTALL GENIEACS + PARAMETER
 ```
 bash installdemo.sh
 ```
@@ -44,7 +46,9 @@ Device, user, permisions, tidak akan terpengaruh<br>
 Bagi yang confignya error, akan ter-repair dengan script ini<br>
 Anda masih bisa kembali ke konfigurasi sebelumnya dengan memilih restore<br>
 ============= CARA RESTORE ================= <br>
-cd<br>
+```
+cd
+```
 ```
 sudo mongorestore --db=genieacs --drop genieacs-backup/genieacs
 ```

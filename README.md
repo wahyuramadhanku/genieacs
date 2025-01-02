@@ -24,7 +24,7 @@ bash installdemo.sh
 ```
 
 
-======================= Baca terlebih dahulu !!! ========================
+Baca terlebih dahulu !!!
 
 #=== Script update GenieACS ====#
 
@@ -45,7 +45,7 @@ silahkan backup terlebih dahulu, kemudian setelah update lakukan config manual l
 Device, user, permisions, tidak akan terpengaruh<br>
 Bagi yang confignya error, akan ter-repair dengan script ini<br>
 Anda masih bisa kembali ke konfigurasi sebelumnya dengan memilih restore<br>
-============= CARA RESTORE ================= <br>
+======= CARA RESTORE ========<br>
 ```
 cd
 ```

@@ -18,7 +18,7 @@ INSTALL GENIEACS ORIGINAL
 ```
 bash install.sh
 ```
-INSTALL GENIEACS + PARAMETER
+INSTALL GENIEACS + VIRTUAL PARAMETER
 ```
 bash installdemo.sh
 ```

@@ -13,23 +13,15 @@ chmod +x install.sh && chmod +x installdemo.sh
 
 bash install.sh
 
-============ Genieacs + Virtual Parameter ==============
+============ Genieacs + Virtual Parameter Demo ==============
 
 bash installdemo.sh
-
-=============Sudah terinput parameter Otomatis=========
-
-user : admin 
-
-pass : admin
-
-Jangan lupa ganti url acs di admin provicion inform dengan ip url server anda
 
 ============= INFO 081947215703 ==============
 
 ======================= Baca terlebih dahulu !!! ========================
 
-#=== Script update GenieACS
+#=== Script update GenieACS ====#
 
 Config sebelumnya akan terhapus dan tergantikan oleh config baru
 

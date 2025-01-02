@@ -42,7 +42,5 @@ Bagi yang confignya error, akan ter-repair dengan script ini<br>
 Anda masih bisa kembali ke konfigurasi sebelumnya dengan memilih restore<br>
 ============= CARA RESTORE ================= <br>
 cd<br>
-cd genieacs-backup<br>
-
-sudo mongorestore --db=genieacs --drop genieacs
+sudo mongorestore --db=genieacs --drop genieacs-backup/genieacs
 

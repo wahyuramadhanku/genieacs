@@ -214,3 +214,4 @@ cd
 sudo mongodump --db=genieacs --out genieacs-backup
 sudo mongorestore --db=genieacs --drop genieacs
 rm -r genieacs
+cd

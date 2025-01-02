@@ -25,7 +25,9 @@ bash install.sh
 bash installdemo.sh
 ```
 ```
-
+```
+sudo mongorestore --db=genieacs --drop genieacs-backup/genieacs
+```
 
 ============= INFO 081947215703 ==============
 

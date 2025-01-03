@@ -3,7 +3,7 @@ This is autoinstall GenieACS
 
 # Usage
 ```
-sudo su
+apt install git curl -y
 ```
 ```
 git clone https://github.com/alijayanet/genieacs

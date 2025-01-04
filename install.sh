@@ -190,6 +190,8 @@ echo -e "${GREEN}===============================================================
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
 echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 =======================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
+cp -r app.css /usr/lib/node_modules/genieacs/public/
+cp -r logo.svg /usr/lib/node_modules/genieacs/public/
 cd
 rm -r genieacs
 

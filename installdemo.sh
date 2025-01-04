@@ -213,6 +213,8 @@ echo -e "${GREEN}===============================================================
 cd
 sudo mongodump --db=genieacs --out genieacs-backup
 sudo mongorestore --db=genieacs --drop genieacs
+cp -r app.css /usr/lib/node_modules/genieacs/public/
+cp -r logo.svg /usr/lib/node_modules/genieacs/public/
 rm -r genieacs
 clear
 

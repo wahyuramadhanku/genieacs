@@ -217,5 +217,4 @@ cp -r app.css /usr/lib/node_modules/genieacs/public/
 cp -r logo.svg /usr/lib/node_modules/genieacs/public/
 rm -r genieacs
 clear
-
 cd

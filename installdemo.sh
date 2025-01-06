@@ -105,7 +105,7 @@ fi
 #GenieACS
 if !  systemctl is-active --quiet genieacs-{cwmp,fs,ui,nbi}; then
     echo -e "${GREEN}================== Menginstall genieACS CWMP, FS, NBI, UI ==================${NC}"
-    npm install -g genieacs@1.2.13
+    npm install -g genieacs@1.2.9
     useradd --system --no-create-home --user-group genieacs || true
     mkdir -p /opt/genieacs
     mkdir -p /opt/genieacs/ext
@@ -217,4 +217,4 @@ cp -r app.css /usr/lib/node_modules/genieacs/public/
 cp -r logo.svg /usr/lib/node_modules/genieacs/public/
 rm -r genieacs
 clear
-cd
+

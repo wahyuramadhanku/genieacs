@@ -216,6 +216,8 @@ cd
 sudo mongodump --db=genieacs --out genieacs-backup
 sudo mongorestore --db=genieacs --drop genieacs
 rm -r genieacs
-cd -
-clear
-
+#sukses install
+echo -e "${GREEN}============================================================================${NC}"
+echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
+echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 =======================${NC}"
+echo -e "${GREEN}============================================================================${NC}"

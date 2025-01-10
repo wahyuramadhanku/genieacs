@@ -192,11 +192,24 @@ echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 ==========
 echo -e "${GREEN}============================================================================${NC}"
 cp -r app.css /usr/lib/node_modules/genieacs/public/
 cp -r logo.svg /usr/lib/node_modules/genieacs/public/
-cd
-rm -r genieacs
+echo -e "${GREEN}Sekarang install parameter. Apakah anda ingin melanjutkan? (y/n)${NC}"
+read confirmation
 
+if [ "$confirmation" != "y" ]; then
+    echo -e "${GREEN}Install dibatalkan..${NC}"
+    
+    exit 1
+fi
+for ((i = 5; i >= 1; i--)); do
+	sleep 1
+    echo "Lanjut Install Parameter $i. Tekan ctrl+c untuk membatalkan"
+done
+
+cd -
+sudo mongorestore --db=genieacs --drop genieacs
 #Sukses
 echo -e "${GREEN}============================================================================${NC}"
+echo -e "${GREEN}=================== VIRTUAL PARAMETER BERHASIL DI INSTALL. =================${NC}"
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
 echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 =======================${NC}"
 echo -e "${GREEN}============================================================================${NC}"

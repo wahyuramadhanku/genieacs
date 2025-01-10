@@ -20,7 +20,7 @@ bash installdemo.sh
 ```
 INSTALL GENIEACS ORIGINAL
 ```
-bash installdemo.sh
+bash install.sh
 ```
 
 Baca terlebih dahulu !!!

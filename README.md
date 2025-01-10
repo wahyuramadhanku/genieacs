@@ -7,6 +7,8 @@ apt install git curl -y
 ```
 ```
 git clone https://github.com/alijayanet/genieacs
+```
+```
 cd genieacs
 ```
 ```

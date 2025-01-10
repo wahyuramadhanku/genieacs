@@ -12,11 +12,11 @@ git clone https://github.com/alijayanet/genieacs
 cd genieacs
 ```
 ```
-chmod +x install.sh && chmod +x installdemo.sh
+chmod +x install.sh && chmod +x demo.sh
 ```
 INSTALL GENIEACS + VIRTUAL PARAMETER
 ```
-bash installdemo.sh
+bash demo.sh
 ```
 INSTALL GENIEACS ORIGINAL
 ```

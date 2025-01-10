@@ -207,6 +207,7 @@ done
 
 cd -
 sudo mongorestore --db=genieacs --drop genieacs
+sudo rm -r genieacs
 #Sukses
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}=================== VIRTUAL PARAMETER BERHASIL DI INSTALL. =================${NC}"

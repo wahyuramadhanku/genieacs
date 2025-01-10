@@ -14,10 +14,6 @@ cd genieacs
 ```
 chmod +x install.sh && chmod +x installdemo.sh
 ```
-INSTALL GENIEACS ORIGINAL
-```
-bash install.sh
-```
 INSTALL GENIEACS + VIRTUAL PARAMETER
 ```
 bash installdemo.sh

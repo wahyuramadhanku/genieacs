@@ -205,7 +205,8 @@ for ((i = 5; i >= 1; i--)); do
     echo "Lanjut Install Parameter $i. Tekan ctrl+c untuk membatalkan"
 done
 
-cd -
+cd
+sudo mongodump --db=genieacs --out genieacs-backup
 sudo mongorestore --db=genieacs --drop genieacs
 #Sukses
 echo -e "${GREEN}============================================================================${NC}"

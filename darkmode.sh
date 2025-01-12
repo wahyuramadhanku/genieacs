@@ -105,7 +105,7 @@ fi
 #GenieACS
 if !  systemctl is-active --quiet genieacs-{cwmp,fs,ui,nbi}; then
     echo -e "${GREEN}================== Menginstall genieACS CWMP, FS, NBI, UI ==================${NC}"
-    npm install -g genieacs@1.2.9
+    npm install -g genieacs@1.2.13
     useradd --system --no-create-home --user-group genieacs || true
     mkdir -p /opt/genieacs
     mkdir -p /opt/genieacs/ext
@@ -210,8 +210,8 @@ echo -e "${GREEN}===============================================================
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
 echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 =======================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
-cp -r app.css /usr/lib/node_modules/genieacs/public/
-cp -r logo.svg /usr/lib/node_modules/genieacs/public/
+cp -r app-LU66VFYW.css /usr/lib/node_modules/genieacs/public/
+cp -r logo-3976e73d.svg /usr/lib/node_modules/genieacs/public/
 cd
 sudo mongodump --db=genieacs --out genieacs-backup
 echo -e "${GREEN}Sekarang install parameter. Apakah anda ingin melanjutkan? (y/n)${NC}"

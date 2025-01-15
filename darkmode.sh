@@ -236,6 +236,5 @@ echo -e "${GREEN}===Jika ACS URL berbeda, silahkan edit di Admin >> Provosions >
 echo -e "${GREEN}========== GenieACS UI akses port 3000. : http://$local_ip:3000 ============${NC}"
 echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 =======================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
-cd genieacs
-sudo unzip -o multitab.zip -d /usr/lib/node_modules/
+cd
 sudo rm -r genieacs

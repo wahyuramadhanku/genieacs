@@ -204,7 +204,6 @@ for ((i = 5; i >= 1; i--)); do
     echo "Lanjut Install Parameter $i. Tekan ctrl+c untuk membatalkan"
 done
 
-sudo unzip -o multitab.zip -d /usr/lib/node_modules/
 cd
 sudo mongodump --db=genieacs --out genieacs-backup
 sudo mongorestore --db=genieacs --drop genieacs

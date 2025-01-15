@@ -238,4 +238,4 @@ echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 ==========
 echo -e "${GREEN}============================================================================${NC}"
 
 cd
-sudo rm -r /genieacs
+sudo rm -r genieacs

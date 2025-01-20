@@ -193,8 +193,6 @@ echo -e "${GREEN}=================== Informasi: Whatsapp 081947215703 ==========
 echo -e "${GREEN}============================================================================${NC}"
 cp -r app-LU66VFYW.css /usr/lib/node_modules/genieacs/public/
 cp -r logo-3976e73d.svg /usr/lib/node_modules/genieacs/public/
-cd
-sudo mongodump --db=genieacs --out genieacs-backup >/dev/null 2>&1
 echo -e "${GREEN}Sekarang install parameter. Apakah anda ingin melanjutkan? (y/n)${NC}"
 read confirmation
 
@@ -208,9 +206,9 @@ for ((i = 5; i >= 1; i--)); do
     echo "Lanjut Install Parameter $i. Tekan ctrl+c untuk membatalkan"
 done
 
-cd
-sudo mongorestore --db=genieacs --drop genieacs >/dev/null 2>&1
-#Sukses
+cd 
+sudo mongodump --db=genieacs --out genieacs-backup
+sudo mongorestore --db=genieacs --drop genieacs
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}=================== VIRTUAL PARAMETER BERHASIL DI INSTALL. =================${NC}"
 echo -e "${GREEN}===Jika ACS URL berbeda, silahkan edit di Admin >> Provosions >> inform ====${NC}"

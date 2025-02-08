@@ -1,5 +1,4 @@
 #!/bin/bash
-url_install='https://srv.ddns.my.id/genieacs/genieacs/'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
@@ -34,16 +33,62 @@ for ((i = 5; i >= 1; i--)); do
     echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
 done
 
+# Deteksi arsitektur sistem
+ARCH=$(uname -m)
+echo -e "${GREEN}Arsitektur sistem terdeteksi: $ARCH${NC}"
+
 #MongoDB
 if ! sudo systemctl is-active --quiet mongod; then
-    curl -s \
-${url_install}\
-mongod.sh | \
-sudo bash
+    echo -e "${GREEN}Memulai instalasi MongoDB...${NC}"
+    
+    # Deteksi dan instalasi MongoDB berdasarkan arsitektur
+    case $ARCH in
+        x86_64)
+            echo -e "${GREEN}Menginstall MongoDB untuk AMD64/x86_64${NC}"
+            curl -s ${url_install}mongod.sh | sudo bash
+            ;;
+        aarch64|arm64)
+            echo -e "${GREEN}Menginstall MongoDB untuk ARM64${NC}"
+            # Tambahkan repository MongoDB untuk ARM
+            wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+            echo "deb [ arch=arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+            sudo apt-get update
+            sudo apt-get install -y mongodb-org
+            ;;
+        armv7l|armhf)
+            echo -e "${GREEN}Menginstall MongoDB untuk ARM32${NC}"
+            # Untuk devices ARM 32-bit, gunakan alternativ MongoDB
+            sudo apt-get update
+            sudo apt-get install -y mongodb
+            ;;
+        *)
+            echo -e "${RED}Arsitektur $ARCH tidak didukung untuk MongoDB${NC}"
+            exit 1
+            ;;
+    esac
+    
+    # Verifikasi instalasi
+    if ! sudo systemctl start mongod; then
+        echo -e "${RED}Gagal memulai MongoDB. Mencoba alternatif konfigurasi...${NC}"
+        # Coba buat direktori data jika belum ada
+        sudo mkdir -p /data/db
+        sudo chown -R mongodb:mongodb /data/db
+        # Coba start ulang service
+        sudo systemctl enable mongod
+        sudo systemctl restart mongod
+    fi
 else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}=================== mongodb sudah terinstall sebelumnya. ===================${NC}"
 fi
+
+# Verifikasi status akhir MongoDB
+if ! sudo systemctl is-active --quiet mongod; then
+    echo -e "${RED}Instalasi MongoDB gagal. Mohon periksa log sistem untuk detail lebih lanjut.${NC}"
+    echo -e "${RED}Log MongoDB dapat dilihat dengan perintah: sudo journalctl -u mongod${NC}"
+    exit 1
+fi
+
 sleep 3
 if ! sudo systemctl is-active --quiet mongod; then
     sudo rm genieacs/install.sh
@@ -68,10 +113,7 @@ check_node_version() {
 }
 
 if ! check_node_version; then
-    curl -s \
-${url_install}\
-nodejs.sh | \
-sudo bash
+    curl -s ${url_install}nodejs.sh | sudo bash
 else
     NODE_VERSION=$(node -v | cut -d 'v' -f 2)
     echo -e "${GREEN}============================================================================${NC}"

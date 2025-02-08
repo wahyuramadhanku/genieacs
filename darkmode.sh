@@ -1,9 +1,9 @@
 #!/bin/bash
-url_install='https://srv.ddns.my.id/genieacs/genieacs/'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 local_ip=$(hostname -I | awk '{print $1}')
+
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}============================================================================${NC}"
 echo -e "${GREEN}=========== AAA   LL      IIIII     JJJ   AAA   YY   YY   AAA ==============${NC}"   
@@ -26,17 +26,27 @@ read confirmation
 
 if [ "$confirmation" != "y" ]; then
     echo -e "${GREEN}Install dibatalkan. Tidak ada perubahan dalam ubuntu server anda.${NC}"
-    /tmp/install.sh
     exit 1
 fi
+
 for ((i = 5; i >= 1; i--)); do
-	sleep 1
+    sleep 1
     echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
 done
 
 # Deteksi arsitektur sistem
 ARCH=$(uname -m)
 echo -e "${GREEN}Arsitektur sistem terdeteksi: $ARCH${NC}"
+
+# Fungsi untuk menginstall dependensi dasar
+install_basic_dependencies() {
+    echo -e "${GREEN}Menginstall dependensi dasar...${NC}"
+    sudo apt-get update
+    sudo apt-get install -y curl wget gnupg2 software-properties-common apt-transport-https ca-certificates
+}
+
+# Install dependensi dasar
+install_basic_dependencies
 
 #MongoDB
 if ! sudo systemctl is-active --quiet mongod; then
@@ -46,11 +56,13 @@ if ! sudo systemctl is-active --quiet mongod; then
     case $ARCH in
         x86_64)
             echo -e "${GREEN}Menginstall MongoDB untuk AMD64/x86_64${NC}"
-            curl -s ${url_install}mongod.sh | sudo bash
+            wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+            echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+            sudo apt-get update
+            sudo apt-get install -y mongodb-org
             ;;
         aarch64|arm64)
             echo -e "${GREEN}Menginstall MongoDB untuk ARM64${NC}"
-            # Tambahkan repository MongoDB untuk ARM
             wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
             echo "deb [ arch=arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
             sudo apt-get update
@@ -58,7 +70,6 @@ if ! sudo systemctl is-active --quiet mongod; then
             ;;
         armv7l|armhf)
             echo -e "${GREEN}Menginstall MongoDB untuk ARM32${NC}"
-            # Untuk devices ARM 32-bit, gunakan alternativ MongoDB
             sudo apt-get update
             sudo apt-get install -y mongodb
             ;;
@@ -71,164 +82,137 @@ if ! sudo systemctl is-active --quiet mongod; then
     # Verifikasi instalasi
     if ! sudo systemctl start mongod; then
         echo -e "${RED}Gagal memulai MongoDB. Mencoba alternatif konfigurasi...${NC}"
-        # Coba buat direktori data jika belum ada
         sudo mkdir -p /data/db
         sudo chown -R mongodb:mongodb /data/db
-        # Coba start ulang service
         sudo systemctl enable mongod
         sudo systemctl restart mongod
     fi
 else
-    echo -e "${GREEN}============================================================================${NC}"
-    echo -e "${GREEN}=================== mongodb sudah terinstall sebelumnya. ===================${NC}"
+    echo -e "${GREEN}MongoDB sudah terinstall sebelumnya.${NC}"
 fi
 
-# Verifikasi status akhir MongoDB
+# Verifikasi status MongoDB
 if ! sudo systemctl is-active --quiet mongod; then
-    echo -e "${RED}Instalasi MongoDB gagal. Mohon periksa log sistem untuk detail lebih lanjut.${NC}"
-    echo -e "${RED}Log MongoDB dapat dilihat dengan perintah: sudo journalctl -u mongod${NC}"
+    echo -e "${RED}Instalasi MongoDB gagal. Mohon periksa log: sudo journalctl -u mongod${NC}"
     exit 1
 fi
 
-sleep 3
-if ! sudo systemctl is-active --quiet mongod; then
-    sudo rm genieacs/install.sh
-    exit 1
-fi
-
-#NodeJS Install
+# Fungsi untuk mengecek versi Node.js
 check_node_version() {
-    if command -v node > /dev/null 2>&1; then
-        NODE_VERSION=$(node -v | cut -d 'v' -f 2)
-        NODE_MAJOR_VERSION=$(echo $NODE_VERSION | cut -d '.' -f 1)
-        NODE_MINOR_VERSION=$(echo $NODE_VERSION | cut -d '.' -f 2)
-
-        if [ "$NODE_MAJOR_VERSION" -lt 12 ] || { [ "$NODE_MAJOR_VERSION" -eq 12 ] && [ "$NODE_MINOR_VERSION" -lt 13 ]; } || [ "$NODE_MAJOR_VERSION" -gt 22 ]; then
-            return 1
-        else
-            return 0
-        fi
-    else
+    if ! command -v node &> /dev/null; then
         return 1
     fi
+    
+    NODE_VERSION=$(node -v | cut -d 'v' -f 2)
+    MAJOR_VERSION=$(echo $NODE_VERSION | cut -d '.' -f 1)
+    
+    if [ $MAJOR_VERSION -lt 14 ]; then
+        return 1
+    fi
+    return 0
 }
 
+# Install Node.js
 if ! check_node_version; then
-    curl -s ${url_install}nodejs.sh | sudo bash
+    echo -e "${GREEN}Menginstall Node.js...${NC}"
+    # Install Node.js 14.x
+    curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+
+    # Verifikasi instalasi Node.js
+    if ! check_node_version; then
+        echo -e "${RED}Instalasi Node.js gagal${NC}"
+        exit 1
+    fi
 else
     NODE_VERSION=$(node -v | cut -d 'v' -f 2)
-    echo -e "${GREEN}============================================================================${NC}"
-    echo -e "${GREEN}============== NodeJS sudah terinstall versi ${NODE_VERSION}. ==============${NC}"
-    echo -e "${GREEN}========================= Lanjut install GenieACS ==========================${NC}"
-
-fi
-if ! check_node_version; then
-    sudo rm genieacs/install.sh
-    exit 1
+    echo -e "${GREEN}Node.js v$NODE_VERSION sudah terinstall${NC}"
 fi
 
-#GenieACS
-if !  systemctl is-active --quiet genieacs-{cwmp,fs,ui,nbi}; then
-    echo -e "${GREEN}================== Menginstall genieACS CWMP, FS, NBI, UI ==================${NC}"
-    npm install -g genieacs@1.2.13
-    useradd --system --no-create-home --user-group genieacs || true
-    mkdir -p /opt/genieacs
-    mkdir -p /opt/genieacs/ext
-    chown genieacs:genieacs /opt/genieacs/ext
-    cat << EOF > /opt/genieacs/genieacs.env
-GENIEACS_CWMP_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-cwmp-access.log
-GENIEACS_NBI_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-nbi-access.log
-GENIEACS_FS_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-fs-access.log
-GENIEACS_UI_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-ui-access.log
-GENIEACS_DEBUG_FILE=/var/log/genieacs/genieacs-debug.yaml
-GENIEACS_EXT_DIR=/opt/genieacs/ext
-GENIEACS_UI_JWT_SECRET=secret
-EOF
-    chown genieacs:genieacs /opt/genieacs/genieacs.env
-    chown genieacs. /opt/genieacs -R
-    chmod 600 /opt/genieacs/genieacs.env
-    mkdir -p /var/log/genieacs
-    chown genieacs. /var/log/genieacs
-    # create systemd unit files
-## CWMP
-    cat << EOF > /etc/systemd/system/genieacs-cwmp.service
+# Install GenieACS
+echo -e "${GREEN}Menginstall GenieACS...${NC}"
+sudo npm install -g genieacs@1.2.13
+
+# Buat service files untuk GenieACS
+echo -e "${GREEN}Membuat service files untuk GenieACS...${NC}"
+sudo tee /lib/systemd/system/genieacs-cwmp.service << EOF
 [Unit]
 Description=GenieACS CWMP
 After=network.target
 
 [Service]
 User=genieacs
-EnvironmentFile=/opt/genieacs/genieacs.env
+Environment=NODE_ENV=production
 ExecStart=/usr/bin/genieacs-cwmp
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
 EOF
 
-## NBI
-    cat << EOF > /etc/systemd/system/genieacs-nbi.service
+sudo tee /lib/systemd/system/genieacs-nbi.service << EOF
 [Unit]
 Description=GenieACS NBI
 After=network.target
- 
+
 [Service]
 User=genieacs
-EnvironmentFile=/opt/genieacs/genieacs.env
+Environment=NODE_ENV=production
 ExecStart=/usr/bin/genieacs-nbi
- 
+
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
 EOF
 
-## FS
-    cat << EOF > /etc/systemd/system/genieacs-fs.service
+sudo tee /lib/systemd/system/genieacs-fs.service << EOF
 [Unit]
 Description=GenieACS FS
 After=network.target
- 
+
 [Service]
 User=genieacs
-EnvironmentFile=/opt/genieacs/genieacs.env
+Environment=NODE_ENV=production
 ExecStart=/usr/bin/genieacs-fs
- 
+
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
 EOF
 
-## UI
-    cat << EOF > /etc/systemd/system/genieacs-ui.service
+sudo tee /lib/systemd/system/genieacs-ui.service << EOF
 [Unit]
 Description=GenieACS UI
 After=network.target
- 
+
 [Service]
 User=genieacs
-EnvironmentFile=/opt/genieacs/genieacs.env
+Environment=NODE_ENV=production
 ExecStart=/usr/bin/genieacs-ui
- 
+
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
 EOF
 
-# config logrotate
- cat << EOF > /etc/logrotate.d/genieacs
-/var/log/genieacs/*.log /var/log/genieacs/*.yaml {
-    daily
-    rotate 30
-    compress
-    delaycompress
-    dateext
-}
-EOF
-    echo -e "${GREEN}========== Install APP GenieACS selesai... ==============${NC}"
-    systemctl daemon-reload
-    systemctl enable --now genieacs-{cwmp,fs,ui,nbi}
-    systemctl start genieacs-{cwmp,fs,ui,nbi}    
-    echo -e "${GREEN}================== Sukses genieACS CWMP, FS, NBI, UI ==================${NC}"
-else
-    echo -e "${GREEN}============================================================================${NC}"
-    echo -e "${GREEN}=================== GenieACS sudah terinstall sebelumnya. ==================${NC}"
-fi
+# Buat user genieacs
+sudo useradd -r genieacs || true
+
+# Reload systemd dan enable services
+sudo systemctl daemon-reload
+sudo systemctl enable genieacs-cwmp
+sudo systemctl enable genieacs-nbi
+sudo systemctl enable genieacs-fs
+sudo systemctl enable genieacs-ui
+
+# Start services
+sudo systemctl start genieacs-cwmp
+sudo systemctl start genieacs-nbi
+sudo systemctl start genieacs-fs
+sudo systemctl start genieacs-ui
+
+echo -e "${GREEN}============================================================================${NC}"
+echo -e "${GREEN}Instalasi GenieACS selesai!${NC}"
+echo -e "${GREEN}Akses UI di: http://$local_ip:3000${NC}"
+echo -e "${GREEN}Username: admin${NC}"
+echo -e "${GREEN}Password: admin${NC}"
+echo -e "${GREEN}============================================================================${NC}"
 
 #Sukses
 echo -e "${GREEN}============================================================================${NC}"
@@ -246,7 +230,7 @@ if [ "$confirmation" != "y" ]; then
     exit 1
 fi
 for ((i = 5; i >= 1; i--)); do
-	sleep 1
+    sleep 1
     echo "Lanjut Install Parameter $i. Tekan ctrl+c untuk membatalkan"
 done
 

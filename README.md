@@ -17,12 +17,9 @@ chmod +x install.sh && chmod +x darkmode.sh
 ```
 chmod +x install-stb.sh
 ```
-```
 INSTALL GENIEACS DARK MODE v@1.2.13
 ```
-```
 bash darkmode.sh
-```
 ```
 INSTALL STB or RASBERRY v@1.2.13
 ```

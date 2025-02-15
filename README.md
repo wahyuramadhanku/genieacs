@@ -14,6 +14,9 @@ cd genieacs
 ```
 chmod +x install.sh && chmod +x darkmode.sh
 ```
+```
+chmod +x stb.sh
+```
 INSTALL GENIEACS DARK MODE v@1.2.13
 ```
 bash darkmode.sh

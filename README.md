@@ -21,6 +21,11 @@ INSTALL GENIEACS DARK MODE v@1.2.13
 ```
 bash darkmode.sh
 ```
+```
+INSTALL STB or RASBERRY v@1.2.13
+```
+bash install-stb.sh
+```
 INSTALL GENIEACS THEMA ORIGINAL v@1.2.13
 ```
 bash install.sh

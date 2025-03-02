@@ -1,5 +1,3 @@
-#!/bin/bash
-url_install='https://srv.ddns.my.id/genieacs/genieacs/'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
@@ -32,6 +30,8 @@ for ((i = 5; i >= 1; i--)); do
     echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
 done
 
+// ... existing code ...
+
 #MongoDB
 if ! sudo systemctl is-active --quiet mongod; then
     # Deteksi arsitektur CPU
@@ -51,9 +51,20 @@ if ! sudo systemctl is-active --quiet mongod; then
             echo "deb [ arch=armhf ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
         fi
         
-        # Update dan install MongoDB
+        # Update dan install MongoDB dengan versi spesifik
         sudo apt-get update
-        sudo apt-get install -y mongodb-org
+        sudo apt-get install -y mongodb-org=4.4.8 \
+            mongodb-org-server=4.4.8 \
+            mongodb-org-shell=4.4.8 \
+            mongodb-org-mongos=4.4.8 \
+            mongodb-org-tools=4.4.8
+
+        # Mencegah upgrade otomatis
+        echo "mongodb-org hold" | sudo dpkg --set-selections
+        echo "mongodb-org-server hold" | sudo dpkg --set-selections
+        echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+        echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+        echo "mongodb-org-tools hold" | sudo dpkg --set-selections
     else
         # Untuk arsitektur x86_64 (tetap menggunakan script original)
         curl -s ${url_install}mongod.sh | sudo bash
@@ -66,6 +77,8 @@ else
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}=================== mongodb sudah terinstall sebelumnya. ===================${NC}"
 fi
+
+// ... existing code ...
 sleep 3
 if ! sudo systemctl is-active --quiet mongod; then
     sudo rm genieacs/install.sh

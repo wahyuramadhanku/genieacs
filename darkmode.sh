@@ -1,4 +1,3 @@
-#!/bin/bash
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
@@ -31,23 +30,7 @@ for ((i = 5; i >= 1; i--)); do
     echo "Melanjutkan dalam $i. Tekan ctrl+c untuk membatalkan"
 done
 
-#MongoDB
-if ! sudo systemctl is-active --quiet mongod; then
-    curl -s \
-${url_install}\
-mongod.sh | \
-sudo bash
-else
-    echo -e "${GREEN}============================================================================${NC}"
-    echo -e "${GREEN}=================== mongodb sudah terinstall sebelumnya. ===================${NC}"
-fi
-sleep 3
-if ! sudo systemctl is-active --quiet mongod; then
-    sudo rm genieacs/install.sh
-    exit 1
-fi
-
-#NodeJS Install
+#Install NodeJS
 check_node_version() {
     if command -v node > /dev/null 2>&1; then
         NODE_VERSION=$(node -v | cut -d 'v' -f 2)
@@ -65,20 +48,36 @@ check_node_version() {
 }
 
 if ! check_node_version; then
-    curl -s \
-${url_install}\
-nodejs.sh | \
-sudo bash
+    echo -e "${GREEN}================== Menginstall NodeJS ==================${NC}"
+    curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+    chmod +x nodesource_setup.sh
+    ./nodesource_setup.sh
+    apt install nodejs -y
+    rm nodesource_setup.sh
+    echo -e "${GREEN}================== Sukses NodeJS ==================${NC}"
 else
     NODE_VERSION=$(node -v | cut -d 'v' -f 2)
     echo -e "${GREEN}============================================================================${NC}"
     echo -e "${GREEN}============== NodeJS sudah terinstall versi ${NODE_VERSION}. ==============${NC}"
     echo -e "${GREEN}========================= Lanjut install GenieACS ==========================${NC}"
-
 fi
-if ! check_node_version; then
-    sudo rm genieacs/install.sh
-    exit 1
+
+#MongoDB
+if !  systemctl is-active --quiet mongod; then
+    echo -e "${GREEN}================== Menginstall MongoDB ==================${NC}"
+    curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
+    apt-key list
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+    apt update
+    apt install mongodb-org -y
+    systemctl start mongod.service
+    systemctl start mongod
+    systemctl enable mongod
+    mongo --eval 'db.runCommand({ connectionStatus: 1 })'
+    echo -e "${GREEN}================== Sukses MongoDB ==================${NC}"
+else
+    echo -e "${GREEN}============================================================================${NC}"
+    echo -e "${GREEN}=================== mongodb sudah terinstall sebelumnya. ===================${NC}"
 fi
 
 #GenieACS

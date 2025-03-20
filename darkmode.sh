@@ -49,7 +49,7 @@ check_node_version() {
 
 if ! check_node_version; then
     echo -e "${GREEN}================== Menginstall NodeJS ==================${NC}"
-    curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+    curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh
     chmod +x nodesource_setup.sh
     ./nodesource_setup.sh
     apt install nodejs -y
